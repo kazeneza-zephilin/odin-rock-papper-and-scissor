@@ -25,10 +25,19 @@
         return computerString;
       }
 
-      function getHumanChoice() {
-        const humanInput = prompt("enter your choice rock, paper or scissor");
-        const lowerChoice = humanInput.toLowerCase();
-        return lowerChoice;
+      function getHumanChoice(
+        promptMessage = "choose between rock, paper or scissor"
+      ) {
+        const lowerChoice = prompt(promptMessage).toLowerCase();
+        if (
+          lowerChoice === "rock" ||
+          lowerChoice === "paper" ||
+          lowerChoice === "scissor"
+        ) {
+          return lowerChoice;
+        } else {
+          getHumanChoice("Invalid input: choose from scissor, paper or rock");
+        }
       }
 
       let humanScore = 0;
