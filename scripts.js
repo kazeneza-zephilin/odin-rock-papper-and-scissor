@@ -1,4 +1,16 @@
-console.log("Game started!");
+let isMatchEnd = false;
+let humanScore = 0;
+let computerScore = 0;
+const runningScore = document.querySelector("#score");
+const finalScore = document.querySelector("#final-score");
+
+const rock = document.querySelector("#rock");
+rock.addEventListener("click", () => playRound("rock"));
+const paper = document.querySelector("#paper");
+paper.addEventListener("click", () => playRound("paper"));
+const scissor = document.querySelector("#scissor");
+scissor.addEventListener("click", () => playRound("scissor"));
+
 function getComputerChoice() {
   const computerInput = Math.floor(Math.random() * 10);
   return computerInput;
@@ -16,30 +28,12 @@ function getStringChoice() {
   return computerString;
 }
 
-function getHumanChoice(
-  promptMessage = "choose between rock, paper or scissor"
-) {
-  const lowerChoice = prompt(promptMessage).toLowerCase();
-  if (
-    lowerChoice === "rock" ||
-    lowerChoice === "paper" ||
-    lowerChoice === "scissor"
-  ) {
-    return lowerChoice;
-  } else {
-    getHumanChoice("Invalid input: choose from scissor, paper or rock");
-  }
-}
-
-let humanScore = 0;
-let computerScore = 0;
-let counter = 5;
-
-function playRound(computerChoice, hummanChoice) {
+function playRound(hummanChoice, computerChoice) {
+    if (humanScore === 5 || computerScore === 5){
+        isMatchEnd = true;
+        return
+    }
   computerChoice = getStringChoice();
-  hummanChoice = getHumanChoice();
-  console.log(`computer choice: ${computerChoice}`);
-  console.log(`Player choice: ${hummanChoice}\n\n`);
   if (computerChoice === hummanChoice) {
     console.log("Deduce\n");
   } else if (eatenBy()) {
@@ -51,8 +45,8 @@ function playRound(computerChoice, hummanChoice) {
   }
   console.log("Score Board");
   console.log(`Computer score ${computerScore}`);
-  console.log(`Human score ${humanScore}\n\n`);
-  console.log(`remaining attenmpt: ${counter}`);
+  console.log(`Human score ${humanScore}`);
+  runningScore.textContent = `player score ${humanScore} - computer score ${computerScore}`;
 
   function eatenBy() {
     if (computerChoice === "rock" && hummanChoice === "paper") {
@@ -70,19 +64,17 @@ function playRound(computerChoice, hummanChoice) {
     }
   }
 }
-
-function playGame() {
-  for (let i = 0; i < 5; i++) {
-    counter--;
-    playRound();
-  }
-  if (humanScore > computerScore) {
-    console.log("Player WON ");
-  } else if (computerScore > humanScore) {
-    console.log("Computer WON");
-  } else {
-    console.log("Game ended Draw");
-  }
+console.log(isMatchEnd)
+if (isMatchEnd){
+    if (humanScore > computerScore){
+        logMessage(finalScore, "You win the game")
+    }else if (humanScore < computerScore){
+        logMessage(finalScore, "You lose the game")
+    }else{
+        logMessage(finalScore, "match ended in tie")
+    }
 }
-/* Starting games */
-playGame();
+
+function logMessage(elem, message) {
+  elem.textContent = `<p>${message}</p>`;
+}
