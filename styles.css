@@ -1,0 +1,32 @@
+:root{
+    --text-color: #666666;
+    --header-color: #871F54;
+}
+*{
+    background-color: #666666;
+}
+
+#welcome{
+    color:white;
+    text-align: center;
+    margin-bottom: 50px;
+    font-weight: bold;
+}
+#buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+}
+button {
+    width: 18rem;
+    height: 15rem;
+    color: var(--text-color);
+    background-color: black;
+    font-size: 35px;
+    font-weight: 600;
+    border-radius: 5px;
+}
+button:hover{
+    color: white;
+}
